@@ -336,12 +336,24 @@ document.ready(function() {
                 mark1: comment['mark1'],
                 hash2: comment['hash2']
               });
-              if (comment['parent_id'] == 0) commentRender = this.template.commentContainer.tplRender({
+              /*if (comment['parent_id'] == 0) commentRender = this.template.commentContainer.tplRender({
                 mark1: comment['mark1'],
                 hash1: comment['hash1'],
                 item_html: commentRender
               });
-              this.$refs.commentform.insertAdjacentHTML((comment['parent_id'] == 0 ? 'afterend' : 'beforebegin'), commentRender);
+              this.$refs.commentform.insertAdjacentHTML((comment['parent_id'] == 0 ? 'afterend' : 'beforebegin'), commentRender);*/
+              commentRender = this.template.commentContainer.tplRender({
+                mark1: comment['mark1'],
+                hash1: comment['hash1'],
+                item_html: commentRender
+              });
+              var node=this.$refs.commentform;
+              while(node&&node.tagName.toLowerCase()!='ul')node=node.parentNode;
+              node.insertAdjacentHTML('beforeend',commentRender);
+              while(node&&node.tagName.toLowerCase()!='article')node=node.parentNode;
+              node.classList.remove('commentform');
+              this.$refs.hiddenbox.append(this.$refs.commentform);
+              setTimeout(function(){window.location.hash="#comment-"+comment['id']},100);
               /* initialization start */
               if (this.commentformData.stickerShowBool) this.commentformData.stickerShowBool = false;
               if (this.stickerMoreBool) this.stickerMoreBool = false;
