@@ -196,11 +196,15 @@ document.ready(function() {
       bgmPlayButton: function() {
         if (this.bgmParam.startBool && this.bgmParam.canplayBool) {
           if (!this.bgmParam.playBool) {
+            window.componentPlayer_audioButtonIndirectPause();
             this.bgmFunPlay();
           } else {
             this.bgmFunPause();
           }
         }
+      },
+      bgmPlayButtonIndirectPause: function() {
+        if (this.bgmParam.startBool && this.bgmParam.canplayBool && this.bgmParam.playBool) this.bgmFunPause();
       },
       bgmChangeButton: function() {
         if (this.bgmParam.startBool) this.bgmAjaxRequest(this.bgmParam.playBool, false);
@@ -214,6 +218,7 @@ document.ready(function() {
           this.bgmAjaxRequest(this.bgmParam.beginAutoPlayBool, true);
         }
       });
+      window.componentBar_bgmPlayButtonIndirectPause = this.bgmPlayButtonIndirectPause;
     }
   });
 });
