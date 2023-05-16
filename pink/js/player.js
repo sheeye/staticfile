@@ -1,5 +1,4 @@
 document.ready(function() {
-
   const componentPlayer = new Vue({
     el: '#player',
     data: {
@@ -178,6 +177,7 @@ document.ready(function() {
                 this.audioPause();
                 this.postAudioButtonStatusPassive('pause');
               } else {
+                window.componentBar_bgmPlayButtonIndirectPause();
                 this.audioPlay();
                 this.postAudioButtonStatusPassive('play');
               }
@@ -198,6 +198,13 @@ document.ready(function() {
             break;
         }
       },
+      audioButtonIndirectPause: function() {
+        if (this.canplayBool && this.playBool) {
+          this.audioPause();
+          /* post audio button synchronization status */
+          this.postAudioButtonStatusPassive('pause');
+        }
+      },
       postAudioButtonStatusInitiativeToPrevButton: function() {
         this.postAudioButtonStatusPassive('pause');
         this.postAudioButtonStatusPassive('cannotplay');
@@ -205,6 +212,7 @@ document.ready(function() {
       postAudioButtonStatusInitiative: function(status, dom, arg = undefined) {
         switch (status) {
           case 'play':
+            window.componentBar_bgmPlayButtonIndirectPause();
             dom.classList.add('play');
             if (arg) {
               this.canplayBool = false;
@@ -268,7 +276,7 @@ document.ready(function() {
         if (this.showBool) this.blockPosition();
       });
       window.componentPlayer_postAudioButton = this.postAudioButton;
+      window.componentPlayer_audioButtonIndirectPause = this.audioButtonIndirectPause;
     }
   });
-
 });
