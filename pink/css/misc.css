@@ -14,7 +14,7 @@
   --misc_child_size: 36px;
   --misc_child_offset: 15px;
   position: fixed;
-  z-index: 11;
+  z-index: 12;
   right: 2%;
   bottom: 2%;
   display: none;
