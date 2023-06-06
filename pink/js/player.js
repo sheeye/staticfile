@@ -61,6 +61,9 @@ document.ready(function() {
           this.block.top = max;
         }
         return this.block.top;
+      },
+      isTouchDevice: function() {
+        return 'ontouchstart' in window;
       }
     },
     methods: {
@@ -75,26 +78,33 @@ document.ready(function() {
         }
       },
       blockPosition: function() {
-        this.$el.style.left = `${this.blockMoveDistanceX}px`;
-        this.$el.style.top = `${this.blockMoveDistanceY}px`;
+        this.$el.style.transform = 'translate3d(' + this.blockMoveDistanceX + 'px, ' + this.blockMoveDistanceY + 'px, 0)';
         localStorage.setItem('player-left', this.blockMoveDistanceX);
         localStorage.setItem('player-top', this.blockMoveDistanceY);
       },
       playerMouseDown: function(e) {
-        this.block.insetX = e.clientX - this.$el.offsetLeft;
-        this.block.insetY = e.clientY - this.$el.offsetTop;
+        e.preventDefault();
+        let event = this.isTouchDevice ? e.targetTouches[0] : e;
+        this.block.insetX = event.clientX - this.$el.getBoundingClientRect().left;
+        this.block.insetY = event.clientY - this.$el.getBoundingClientRect().top;
         this.block.holdBool = true;
         this.documentSelectDisabled(true);
+        window.addEventListener(this.isTouchDevice ? 'touchmove' : 'mousemove', this.playerMouseMove, {passive: false});
+        window.addEventListener(this.isTouchDevice ? 'touchend' : 'mouseup', this.playerMouseUp);
       },
       playerMouseMove: function(e) {
+        e.preventDefault();
         if (this.block.holdBool) {
-          this.block.left = e.clientX - this.block.insetX - this.block.margin;
-          this.block.top = e.clientY - this.block.insetY - this.block.margin;
+          let event = this.isTouchDevice ? e.targetTouches[0] : e;
+          this.block.left = event.clientX - this.block.insetX - this.block.margin;
+          this.block.top = event.clientY - this.block.insetY - this.block.margin;
           this.blockPosition();
         }
       },
       playerMouseUp: function() {
         this.block.holdBool = false;
+        window.removeEventListener(this.isTouchDevice ? 'touchmove' : 'mousemove', this.playerMouseMove);
+        window.removeEventListener(this.isTouchDevice ? 'touchend' : 'mouseup', this.playerMouseUp);
         this.documentSelectDisabled(false);
       },
       audioReplay: function() {
@@ -177,7 +187,7 @@ document.ready(function() {
                 this.audioPause();
                 this.postAudioButtonStatusPassive('pause');
               } else {
-                window.componentBar_bgmPlayButtonIndirectPause();
+                if (typeof window.componentBar_bgmPlayButtonIndirectPause === 'function') window.componentBar_bgmPlayButtonIndirectPause();
                 this.audioPlay();
                 this.postAudioButtonStatusPassive('play');
               }
@@ -212,7 +222,7 @@ document.ready(function() {
       postAudioButtonStatusInitiative: function(status, dom, arg = undefined) {
         switch (status) {
           case 'play':
-            window.componentBar_bgmPlayButtonIndirectPause();
+            if (typeof window.componentBar_bgmPlayButtonIndirectPause === 'function') window.componentBar_bgmPlayButtonIndirectPause();
             dom.classList.add('play');
             if (arg) {
               this.canplayBool = false;
@@ -246,30 +256,7 @@ document.ready(function() {
       }
     },
     mounted: function() {
-      this.$refs.moveBlock.addEventListener('mousedown', e => {
-        this.playerMouseDown(e);
-        e.stopPropagation();
-      });
-      this.$refs.moveBlock.addEventListener('mousemove', e => {
-        this.playerMouseMove(e);
-        e.stopPropagation();
-      });
-      this.$refs.moveBlock.addEventListener('mouseup', e => {
-        this.playerMouseUp();
-        e.stopPropagation();
-      });
-      this.$refs.moveBlock.addEventListener('touchstart', e => {
-        e.preventDefault();
-        this.playerMouseDown(e.targetTouches[0]);
-      });
-      this.$refs.moveBlock.addEventListener('touchmove', e => {
-        e.preventDefault();
-        this.playerMouseMove(e.targetTouches[0]);
-      });
-      this.$refs.moveBlock.addEventListener('touchend', e => {
-        e.preventDefault();
-        this.playerMouseUp();
-      });
+      this.$refs.moveBlock.addEventListener(this.isTouchDevice ? 'touchstart' : 'mousedown', this.playerMouseDown, {passive: false});
       window.addEventListener('resize', () => {
         this.block.windowWidth = document.documentElement.clientWidth;
         this.block.windowHeight = document.documentElement.clientHeight;
