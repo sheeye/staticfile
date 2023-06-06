@@ -1,14 +1,14 @@
 #bar-dialog-wrapper {
   position: fixed;
-  z-index: 12;
+  z-index: 13;
   left: 0;
   top: 0;
   display: none;
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  -webkit-backdrop-filter: saturate(120%) contrast(80%) blur(2px); /* Safari */
-  backdrop-filter: saturate(120%) contrast(80%) blur(2px);
+  -webkit-backdrop-filter: saturate(80%) contrast(80%) blur(2px); /* Safari */
+  backdrop-filter: saturate(80%) contrast(80%) blur(2px);
   animation: g-animation-transparent-to-opaque 0.3s;
 }
 
@@ -736,7 +736,7 @@
   margin: 0 10px 0 0;
 }
 
-#bar-item-hub > ul.hub-comments > li.hub-comment > div.hub-comment-avatar > img.from-img {
+#bar-item-hub > ul.hub-comments > li.hub-comment > div.hub-comment-avatar > img {
   border-radius: 5px;
 }
 
@@ -750,7 +750,7 @@
   line-height: var(--bar_dialog_line_height_primary);
 }
 
-#bar-item-hub > ul.hub-comments > li.hub-comment > div.hub-comment-main > div.hub-comment-info > span.from {
+#bar-item-hub > ul.hub-comments > li.hub-comment > div.hub-comment-main > div.hub-comment-info > span.name {
   margin: 0 1px 0 0;
   color: var(--bar_dialog_text_color_highlight);
 }
@@ -1719,7 +1719,7 @@
 #bar-item-editor > div.otherarea > div.function > div.media > details.media-library > ul.library-list.wait::before,
 #bar-item-editor > div.otherarea > div.function > div.media > details.media-library > ul.library-list.empty::before {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   left: 0;
   display: block;
@@ -1733,7 +1733,7 @@
   position: absolute;
   z-index: 2;
   top: calc(50% - 6px);
-  left: calc(50% - 6px);
+  left: 0;
   display: block;
   width: 10px;
   height: 10px;
@@ -1758,10 +1758,9 @@
   display: block;
   width: 100%;
   height: var(--bar_dialog_line_height_secondary);
-  color: var(--bar_dialog_text_color_secondary);
+  color: var(--post_form_tip_text_color);
   font-size: var(--bar_dialog_font_size_secondary);
   line-height: var(--bar_dialog_line_height_secondary);
-  text-align: center;
   content: attr(data-emptytip);
 }
 
