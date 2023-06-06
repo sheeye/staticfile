@@ -254,7 +254,7 @@ document.ready(function() {
               viewImage(index, dom);
               break;
             case 'audioplay':
-              window.componentPlayer_postAudioButton(index, dom.getAttribute('data-attachment1'), dom.getAttribute('data-attachment2'));
+              if (typeof window.componentPlayer_postAudioButton === 'function') window.componentPlayer_postAudioButton(index, dom.getAttribute('data-attachment1'), dom.getAttribute('data-attachment2'));
               break;
             case 'morecontent':
               moreContent(index, dom);
