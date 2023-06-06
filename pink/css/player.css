@@ -9,7 +9,7 @@
   --player_cover_size: 70px;
   --player_btn_size: 28px;
   position: fixed;
-  z-index: 13;
+  z-index: 11;
   left: 0;
   top: 0;
   display: none;
