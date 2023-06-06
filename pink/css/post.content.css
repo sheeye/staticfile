@@ -128,47 +128,54 @@ div.post-content-gallery > figure.gallery-thumbnail > img.thumbnail-image {
   border-radius: var(--post_content_card_border_radius);
 }
 
-/* post-content-gallery gallery-view */
+/* post-content-gallery viewer */
 
-figure.gallery-view {
-  --gallery_view_font_size_primary: var(--font_size_tall);
+div.viewer {
+  --viewer_font_size_primary: var(--font_size_tall);
+  --viewer_border_radius: 4px;
+  --viewer_button_size: 36px;
+  --viewer_loading_height: 4px;
   position: fixed;
   z-index: 2147483647;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 1);
   cursor: zoom-out;
 }
 
-figure.gallery-view > span.view-loading {
+div.viewer > figure.viewer-image {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+div.viewer > figure.viewer-image > div.viewer-loading {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   display: block;
-  width: 120px;
-  height: calc(var(--gallery_view_font_size_primary) * 2);
-  color: #eaeaea;
-  font: bold var(--gallery_view_font_size_primary) / calc(var(--gallery_view_font_size_primary) * 2) 'Rounded Mplus 1c', sans-serif;
-  text-align: center;
+  width: 150px;
+  height: var(--viewer_loading_height);
+  border-radius: calc(var(--viewer_loading_height) / 2);
   overflow: hidden;
 }
 
-figure.gallery-view > span.view-loading::after {
+div.viewer > figure.viewer-image > div.viewer-loading::after {
   position: absolute;
   left: 0;
-  bottom: 0;
+  top: 0;
   transform: translateX(-100%);
   width: 100%;
-  height: 1px;
-  background-color: #0267ff;
+  height: var(--viewer_loading_height);
+  background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.75), transparent);
   animation: g-animation-wait-line 0.75s ease-in-out infinite;
   content: '';
 }
 
-figure.gallery-view > img.view-image {
+div.viewer > figure.viewer-image > img {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -178,8 +185,47 @@ figure.gallery-view > img.view-image {
   max-height: 100%;
   object-fit: cover;
   object-position: 50% 50%;
-  pointer-events: none;
   animation: g-animation-transparent-to-opaque 0.25s linear;
+  cursor: default;
+}
+
+div.viewer > div.viewer-controls.show,
+div.viewer > div.viewer-controls > nav.viewer-navigation {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+div.viewer > div.viewer-controls {
+  position: absolute;
+  left: 50%;
+  bottom: 50px;
+  transform: translateX(-50%);
+  display: none;
+  min-width: calc(((var(--viewer_button_size) / 2 * 3) * 3) + (10px * 2));
+  max-width: calc(450px - (10px * 2));
+  width: calc(100% - 40px - (10px * 2));
+  padding: 7px 10px;
+  cursor: default;
+}
+
+div.viewer > div.viewer-controls > div.viewer-count,
+div.viewer > div.viewer-controls > nav.viewer-navigation > div.viewer-btn {
+  width: calc(var(--viewer_button_size) / 2 * 3);
+  height: var(--viewer_button_size);
+  color: #eaeaea;
+  font: bold var(--viewer_font_size_primary) / var(--viewer_button_size) 'Rounded Mplus 1c', sans-serif;
+  text-transform: uppercase;
+  border-radius: var(--viewer_border_radius);
+}
+
+div.viewer > div.viewer-controls > div.viewer-count {
+  letter-spacing: 2px;
+}
+
+div.viewer > div.viewer-controls > nav.viewer-navigation > div.viewer-btn {
+  cursor: pointer;
 }
 
 /* post-content-video */
