@@ -74,7 +74,7 @@ document.ready(function() {
               }
               if ($('#bar-item-' + name + '-mark2')) {
                 let itemMark2 = $('#bar-item-' + name + '-mark2');
-                if (itemMark2 != itemMark1.firstChild) itemMark1.insertBefore(itemMark2, itemMark1.firstChild);
+                if (itemMark2 != itemMark1.firstElementChild) itemMark1.insertBefore(itemMark2, itemMark1.firstElementChild);
               }
             }
             break;
@@ -196,7 +196,7 @@ document.ready(function() {
       bgmPlayButton: function() {
         if (this.bgmParam.startBool && this.bgmParam.canplayBool) {
           if (!this.bgmParam.playBool) {
-            window.componentPlayer_audioButtonIndirectPause();
+            if (typeof window.componentPlayer_audioButtonIndirectPause === 'function') window.componentPlayer_audioButtonIndirectPause();
             this.bgmFunPlay();
           } else {
             this.bgmFunPause();
