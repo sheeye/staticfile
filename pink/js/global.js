@@ -144,9 +144,3 @@ const cookieSet = (key, value, days = -1) => {
     log('cookie status: disabled');
   }
 };
-
-const childIndex = child => {
-  let children = child.parentNode.children;
-  let index = [].indexOf.call(children, child);
-  return [index + 1, children.length];
-};
