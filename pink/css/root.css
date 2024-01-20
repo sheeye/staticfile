@@ -1,4 +1,7 @@
-@font-face {
+@import url('../lib/font/HarmonyOS_Sans_light/result.css');
+@import url('../lib/font/HarmonyOS_Sans_medium/result.css');
+@import url('../lib/font/HarmonyOS_Sans_regular/result.css');
+/*@font-face {
   font-family: 'HarmonyOS Sans';
   src: url('../lib/font/HarmonyOS_Sans_light.woff2') format('woff2');
   font-weight: 300;
@@ -15,7 +18,7 @@
   src: url('../lib/font/HarmonyOS_Sans_medium.woff2') format('woff2');
   font-weight: 500;
   font-display: swap;
-}
+}*/
 @font-face {
   font-family: 'Rounded Mplus 1c';
   src: url('../lib/font/RoundedMplus1c_regular.woff2') format('woff2');
